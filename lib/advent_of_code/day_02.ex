@@ -13,9 +13,8 @@ defmodule AdventOfCode.Day02 do
 
     input
     |> separate_input()
-    |> Enum.reduce(0, fn line, acc ->
-      line_data = parse_line(line)
-
+    |> Enum.map(&parse_line(&1))
+    |> Enum.reduce(0, fn line_data, acc ->
       if Enum.any?(line_data[:draws], &exceeds_a_maximum.(&1)) do
         acc
       else
@@ -27,23 +26,28 @@ defmodule AdventOfCode.Day02 do
   def part2(input) do
     input
     |> separate_input()
-    |> Enum.reduce(0, fn line, acc ->
-      line_data = parse_line(line)
-
-      determine_new_required = fn to_check, current ->
-        if(to_check > 0 && (current == 0 or to_check > current), do: to_check, else: current)
-      end
-
-      required =
-        Enum.reduce(line_data[:draws], %{red: 0, green: 0, blue: 0}, fn draw, acc ->
-          acc
-          |> Map.put(:red, determine_new_required.(draw[:red], acc[:red]))
-          |> Map.put(:green, determine_new_required.(draw[:green], acc[:green]))
-          |> Map.put(:blue, determine_new_required.(draw[:blue], acc[:blue]))
-        end)
-
+    |> Enum.map(&parse_line(&1))
+    |> Enum.map(&required_of_each_color(&1))
+    |> Enum.reduce(0, fn required, acc ->
       acc + required[:red] * required[:green] * required[:blue]
     end)
+  end
+
+  defp required_of_each_color(line_data) do
+    Enum.reduce(line_data[:draws], %{red: 0, green: 0, blue: 0}, fn draw, acc ->
+      acc
+      |> Map.put(:red, determine_new_required(draw[:red], acc[:red]))
+      |> Map.put(:green, determine_new_required(draw[:green], acc[:green]))
+      |> Map.put(:blue, determine_new_required(draw[:blue], acc[:blue]))
+    end)
+  end
+
+  defp determine_new_required(to_check, current) do
+    if to_check > 0 and (current == 0 or to_check > current) do
+      to_check
+    else
+      current
+    end
   end
 
   defp separate_input(input) do

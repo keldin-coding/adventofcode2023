@@ -30,18 +30,16 @@ defmodule AdventOfCode.Day02 do
     |> Enum.reduce(0, fn line, acc ->
       line_data = parse_line(line)
 
-      is_new_required = fn to_check, current ->
-        to_check > 0 && (current == 0 or to_check > current)
+      determine_new_required = fn to_check, current ->
+        if(to_check > 0 && (current == 0 or to_check > current), do: to_check, else: current)
       end
 
       required =
         Enum.reduce(line_data[:draws], %{red: 0, green: 0, blue: 0}, fn draw, acc ->
-          Enum.reduce([:red, :green, :blue], acc, fn color, nested_acc ->
-            if(is_new_required.(draw[color], nested_acc[color]),
-              do: Map.put(nested_acc, color, draw[color]),
-              else: nested_acc
-            )
-          end)
+          acc
+          |> Map.put(:red, determine_new_required.(draw[:red], acc[:red]))
+          |> Map.put(:green, determine_new_required.(draw[:green], acc[:green]))
+          |> Map.put(:blue, determine_new_required.(draw[:blue], acc[:blue]))
         end)
 
       acc + required[:red] * required[:green] * required[:blue]

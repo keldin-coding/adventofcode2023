@@ -3,7 +3,7 @@ defmodule AdventOfCode.Day02Test do
 
   import AdventOfCode.Day02
 
-  test "part1" do
+  test "part1 adds together the IDs of all games that can meet the maximum color cubes added" do
     input = """
     Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
     Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
@@ -17,7 +17,7 @@ defmodule AdventOfCode.Day02Test do
     assert result == 8
   end
 
-  test "part2" do
+  test "part2 returns the sum of the products of the required number of each color" do
     input = """
     Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
     Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue

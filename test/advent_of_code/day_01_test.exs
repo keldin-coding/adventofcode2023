@@ -3,7 +3,7 @@ defmodule AdventOfCode.Day01Test do
 
   import AdventOfCode.Day01
 
-  test "part1" do
+  test "part1 returns the sum of first and last digit in each line" do
     input = """
     1abc2
     pqr3stu8vwx
@@ -16,7 +16,7 @@ defmodule AdventOfCode.Day01Test do
     assert result == 142
   end
 
-  test "part2" do
+  test "part2 returns the sum of the first and last digit, even spelled out, in each line" do
     input = """
     two1nine
     eightwothree

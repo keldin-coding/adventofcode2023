@@ -3,19 +3,41 @@ defmodule AdventOfCode.Day03Test do
 
   import AdventOfCode.Day03
 
-  @tag :skip
-  test "part1" do
-    input = nil
+  test "part1 returns the sum of part numbers touching a symbol" do
+    input = """
+    467..114..
+    ...*......
+    ..35..633.
+    ......#...
+    617*......
+    .....+.58.
+    ..592.....
+    ......755.
+    ...$.*....
+    .664.598..
+    """
+
     result = part1(input)
 
-    assert result
+    assert result == 4361
   end
 
-  @tag :skip
-  test "part2" do
-    input = nil
+  test "part2 returns the sum of the gear products where gears are * touching exactly two numbers" do
+    input = """
+    467..114..
+    ...*......
+    ..35..633.
+    ......#...
+    617*......
+    .....+.58.
+    ..592.....
+    ......755.
+    ...$.*....
+    .664.598..
+    """
+
     result = part2(input)
 
-    assert result
+    assert result == 467_835
   end
 end
